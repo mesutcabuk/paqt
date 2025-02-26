@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paqt, Super Simple Date Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, button {
+            padding: 8px;
+            font-size: 16px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+        .features {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Rent Something</h2>
+    <form id="rentalForm">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" required>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" required>
+
+        <label for="objectSelect">Select an Object:</label>
+        <select id="objectSelect" required>
+            <option value="">-- Choose an object --</option>
+            <option value="car">Car</option>
+            <option value="bike">Bike</option>
+            <option value="scooter">Scooter</option>
+        </select>
+
+        <button type="submit">Check Availability</button>
+        <p id="message"></p>
+    </form>
+
+    <div class="features">
+        <h3>✅ Features:</h3>
+        <ul>
+            <li>✅ Prevents submission if End Date is not later than Start Date</li>
+            <li>✅ Displays a validation message in red if the date range is invalid</li>
+            <li>✅ Ensures all fields are filled before submission</li>
+        </ul>
+    </div>
+
+    <script>
+        document.getElementById("rentalForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let startDate = document.getElementById("startDate").value;
+            let endDate = document.getElementById("endDate").value;
+            let selectedObject = document.getElementById("objectSelect").value;
+            let message = document.getElementById("message");
+
+            // Reset message
+            message.innerHTML = "";
+
+            // Validation: Ensure End Date is later than Start Date
+            if (new Date(endDate) <= new Date(startDate)) {
+                message.innerHTML = "<span class='error'>End Date must be later than Start Date!</span>";
+                return;
+            }
+
+            // Validation: Ensure all fields are filled
+                        if (!startDate || !endDate || !selectedObject) {
+                message.innerHTML = "<span class='error'>All fields are required!</span>";
+                return;
+            }
+
+            // Mock API call simulation (fake backend response)
+            setTimeout(() => {
+                let isAvailable = Math.random() > 0.5; // Simulating availability check
+                if (isAvailable) {
+                    message.innerHTML = "<span class='success'>The object is available!</span>";
+                } else {
+                    message.innerHTML = "<span class='error'>The object is NOT available on these dates.</span>";
+                }
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

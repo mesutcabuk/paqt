@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paqt, Super Simple Date Picker</title>
+</head> 
+<body>
+
+    <h2>Rent Something</h2>   
+    <div id="app">
+
+    <form @submit.prevent="checkAvailability">
+        <label>Start Date:</label>
+        <input type="date" v-model="startDate" required />
+
+        <label>End Date:</label>
+        <input type="date" v-model="endDate" required />
+
+        <label>Select an Object:</label>
+        <select v-model="objectType" required>
+            <option value="">-- Choose an object --</option>
+            <option value="car">Car</option>
+            <option value="bike">Bike</option>
+            <option value="scooter">Scooter</option>
+        </select>
+
+        <button type="submit">Check Availability</button>
+        <p v-if="message" :style="{ color: message.includes('❌') ? 'red' : 'green' }">{{ message }}</p>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script>
+    Vue.createApp({
+        data() {
+            return { startDate: "", endDate: "", objectType: "", message: "" };
+        },
+        methods: {
+            checkAvailability() {
+                this.message = "";
+                if (!this.startDate || !this.endDate || !this.objectType) {
+                    this.message = "❌ All fields are required!";
+                    return;
+                }
+                if (new Date(this.endDate) <= new Date(this.startDate)) {
+                    this.message = "❌ End Date must be later than Start Date!";
+                    return;
+                }
+                this.message = Math.random() > 0.5 ? "✅ Object is available!" : "❌ Object is NOT available!";
+            }
+        }
+    }).mount("#app");
+</script>

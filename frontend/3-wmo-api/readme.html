@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMO Subsidy API - Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background: #f4f4f4; }
+        h1, h2 { color: #2c3e50; }
+        code { background: #e0e0e0; padding: 3px 5px; border-radius: 5px; }
+        pre { background: #fff; padding: 10px; border-left: 5px solid #3498db; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #3498db; color: white; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📌 WMO Subsidy API Documentation</h1>
+        <p>This API provides endpoints to manage **residents, ride bookings, and annual budget resets** for the WMO subsidy system.</p>
+
+        <h2>📌 API Endpoints</h2>
+
+        <h3>1️⃣ Get All Residents</h3>
+        <p>Retrieves a list of all residents eligible for the WMO subsidy.</p>
+        <code>GET /api/residents</code>
+        <pre>[
+    { "id": 1, "name": "John Doe", "address": "Utrecht", "budget": 1000 },
+    { "id": 2, "name": "Jane Smith", "address": "Utrecht", "budget": 800 }
+]</pre>
+
+        <h3>2️⃣ Get Resident by ID</h3>
+        <p>Fetches details of a single resident.</p>
+        <code>GET /api/residents/{id}</code>
+        <pre>{
+    "id": 1,
+    "name": "John Doe",
+    "address": "Utrecht",
+    "budget": 1000
+}</pre>
+
+        <h3>3️⃣ Book a Ride</h3>
+        <p>Allows a call center to book a ride for a resident.</p>
+        <code>POST /api/rides</code>
+        <p>Request Payload:</p>
+        <pre>{
+    "resident_id": 1,
+    "pickup_location": "Utrecht Central",
+    "dropoff_location": "Utrecht Hospital",
+    "distance_km": 10
+}</pre>
+        <p>Response (Success):</p>
+        <pre>{
+    "message": "Ride booked successfully",
+    "remaining_budget": 990
+}</pre>
+        <p>Response (Failure - Not Enough Budget):</p>
+        <pre>{
+    "error": "Insufficient budget"
+}</pre>
+
+        <h3>4️⃣ Get Rides for a Taxi Company</h3>
+        <p>Taxi companies retrieve rides assigned to them.</p>
+        <code>GET /api/taxi/rides</code>
+        <pre>[
+    { "ride_id": 101, "resident_id": 1, "pickup": "Utrecht Central", "dropoff": "Hospital", "status": "Scheduled" },
+    { "ride_id": 102, "resident_id": 2, "pickup": "Mall", "dropoff": "University", "status": "Completed" }
+]</pre>
+
+        <h3>5️⃣ Auto-Reset Annual Budget</h3>
+        <p>Automatically resets the annual budget for active subsidies.</p>
+        <code>POST /api/budget/reset</code>
+        <pre>{
+    "message": "All active budgets have been reset."
+}</pre>
+
+        <h2>📌 Summary of Endpoints</h2>
+        <table>
+            <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>GET</code></td>
+                <td>/api/residents</td>
+                <td>Get all residents</td>
+            </tr>
+            <tr>
+                <td><code>GET</code></td>
+                <td>/api/residents/{id}</td>
+                <td>Get resident by ID</td>
+            </tr>
+            <tr>
+                <td><code>POST</code></td>
+                <td>/api/rides</td>
+                <td>Book a ride</td>
+            </tr>
+            <tr>
+                <td><code>GET</code></td>
+                <td>/api/taxi/rides</td>
+                <td>Get rides for taxi companies</td>
+            </tr>
+            <tr>
+                <td><code>POST</code></td>
+                <td>/api/budget/reset</td>
+                <td>Reset annual budgets</td>
+            </tr>
+            <tr>
+                <td><code>POST</code></td>
+                <td>/api/budget/reset/{id}</td>
+                <td>Reset annual budget for the given ID</td>
+            </tr>        
+        </table>
+
+        <h2>📌 Notes</h2>
+        <p>✅ This API is designed for **WMO subsidy management**.</p>
+        <p>✅ Supports **residents, taxi companies, and call centers**.</p>
+        <p>✅ Can be **expanded** with authentication & additional features.</p>
+
+
+    </div>
+
+</body>
+</html>
