@@ -1,0 +1,25 @@
+budget:
+  default_km: 5000
+
+third_party_api:
+  base_url: "https://thirdparty.example.com/api"
+  username: "api_user"
+  password: "secure_password"
+  certificate_path: "/etc/ssl/certs/thirdparty_cert.pem"
+
+logging:
+  driver: "file"
+  file_path: "storage/logs/wmo.log"
+
+alerts:
+  enabled: true
+  channels:
+    - type: "slack"
+      webhook_url: "https://hooks.slack.com/services/T000/B000/XXXX"
+    - type: "email"
+      email: "admin@example.com"
+
+services:
+  google_maps:
+    api_key: "YOUR_GOOGLE_MAPS_API_KEY"
+    base_url: "https://maps.googleapis.com/maps/api/distancematrix/json"

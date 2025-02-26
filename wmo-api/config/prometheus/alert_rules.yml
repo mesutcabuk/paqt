@@ -1,0 +1,11 @@
+groups:
+  - name: LaravelAlerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(wmo_http_requests_total[5m]) > 10
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected in Laravel"
+          description: "Error rate exceeded 10 requests per second in the last 5 minutes."

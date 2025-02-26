@@ -1,0 +1,42 @@
+- name: Deploy WMO API
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Ensure dependencies are installed
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - unzip
+          - php-cli
+          - git
+        state: present
+
+    - name: Clone the repository
+      git:
+        repo: 'git@github.com:mesutcabuk/wmo-api.git'
+        dest: /var/www/wmo-api
+        version: main
+        force: yes
+
+    - name: Install PHP dependencies with Composer
+      shell: composer install --no-dev --prefer-dist
+      args:
+        chdir: /var/www/wmo-api
+
+    - name: Start Laravel Containers
+      shell: docker-compose up -d
+      args:
+        chdir: /var/www/wmo-api
+
+    - name: Run Laravel Migrations
+      shell: docker exec $(docker ps --format '{{.Names}}' | grep laravel_app) php artisan migrate --force
+
+    - name: Restart Docker Service
+      systemd:
+        name: docker
+        state: restarted
