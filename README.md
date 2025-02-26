@@ -1,14 +1,14 @@
 # paqt
 
 # A General structure created for 
--- Database migrations for all required entities
--- Models, controllers, and API routes
--- Logging (Monolog, JSON format)
--- Exception handling
--- Warning & alerting system (email/SMS/Slack-ready)
--- Docker setup
--- GitHub CI/CD workflow
--- Ansible deployment playbook
+- Database migrations for all required entities
+- Models, controllers, and API routes
+- Logging (Monolog, JSON format)
+- Exception handling
+- Warning & alerting system (email/SMS/Slack-ready)
+- Docker setup
+- GitHub CI/CD workflow
+- Ansible deployment playbook
 
 
 
