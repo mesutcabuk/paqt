@@ -1,0 +1,35 @@
+{
+    "tests": [
+      {
+        "input_list": [1,2,3,4,5,6,7,8,9,10],
+        "chunk_size": 3,
+        "expected_output": [[1,2,3], [4,5,6], [7,8,9], [10]]
+      },
+      {
+        "input_list": [1,2,3,4,5,6],
+        "chunk_size": 2,
+        "expected_output": [[1,2], [3,4], [5,6]]
+      },
+      {
+        "input_list": [42],
+        "chunk_size": 3,
+        "expected_output": [[42]]
+      },
+      {
+        "input_list": [],
+        "chunk_size": 3,
+        "expected_exception": "The input list cannot be empty."
+      },
+      {
+        "input_list": [1,2,3,4,5],
+        "chunk_size": 0,
+        "expected_exception": "The size parameter must be a positive integer."
+      },
+      {
+        "input_list": [1,"two",3],
+        "chunk_size": 2,
+        "expected_exception": "All elements in the list must be numeric."
+      }
+    ]
+  }
+  
